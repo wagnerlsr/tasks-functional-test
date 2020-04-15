@@ -13,7 +13,7 @@ public class TaskTest {
 
 	public WebDriver acessarAplicacao() {
 		
-		System.setProperty("webdriver.chrome.driver", "/home/wagner/work/programas/chromedriver_linux64/chromedriver");
+		System.setProperty("webdriver.chrome.driver", "/home/wagner/work/programas/chromedriver_linux64/chromedriver80");
 		
 		WebDriver driver = new ChromeDriver();
 
