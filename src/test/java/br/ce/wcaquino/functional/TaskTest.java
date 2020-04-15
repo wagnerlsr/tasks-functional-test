@@ -46,7 +46,7 @@ public class TaskTest {
 		
 		WebDriver driver = new RemoteWebDriver(new URL("http://172.18.0.1:5555/wd/hub"), cap);
 		
-		driver.navigate().to("http://localhost:8888/tasks");
+		driver.navigate().to("http://172.18.0.1:8888/tasks");
 		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 		
 		return driver;
