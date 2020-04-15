@@ -1,20 +1,27 @@
 package br.ce.wcaquino.functional;
 
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.concurrent.TimeUnit;
 
 import org.junit.Assert;
 import org.junit.Test;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Platform;
+import org.openqa.selenium.UnexpectedAlertBehaviour;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.remote.CapabilityType;
+import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.remote.RemoteWebDriver;
 
 
 public class TaskTest {
 
-	public WebDriver acessarAplicacao() {
+	public WebDriver acessarAplicacao() throws MalformedURLException {
 		
-		System.setProperty("webdriver.chrome.driver", "/home/wagner/work/programas/chromedriver_linux64/chromedriver80");
+//		System.setProperty("webdriver.chrome.driver", "/home/wagner/work/programas/chromedriver_linux64/chromedriver81");
 		
 		ChromeOptions options = new ChromeOptions();
 
@@ -27,7 +34,17 @@ public class TaskTest {
 
 		options.addArguments("--headless");
 		
-		WebDriver driver = new ChromeDriver(options);
+//		WebDriver driver = new ChromeDriver(options);
+		
+		DesiredCapabilities cap = DesiredCapabilities.chrome();
+		
+//		cap.setCapability(CapabilityType.UNEXPECTED_ALERT_BEHAVIOUR, UnexpectedAlertBehaviour.IGNORE);
+		
+		cap.setPlatform(Platform.LINUX);
+		cap.setCapability(ChromeOptions.CAPABILITY, options);
+				
+		
+		WebDriver driver = new RemoteWebDriver(new URL("http://172.18.0.1:5555/wd/hub"), cap);
 		
 		driver.navigate().to("http://localhost:8888/tasks");
 		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
@@ -37,7 +54,7 @@ public class TaskTest {
 	}
 	
 	@Test
-	public void deveSalvarTarefaComSucesso() {
+	public void deveSalvarTarefaComSucesso() throws MalformedURLException {
 
 		WebDriver driver = acessarAplicacao();
 		
@@ -58,7 +75,7 @@ public class TaskTest {
 	}
 	
 	@Test
-	public void naoDeveSalvarTarefaSemDescricao() {
+	public void naoDeveSalvarTarefaSemDescricao() throws MalformedURLException {
 
 		WebDriver driver = acessarAplicacao();
 		
@@ -78,7 +95,7 @@ public class TaskTest {
 	}
 	
 	@Test
-	public void naoDeveSalvarTarefaSemData() {
+	public void naoDeveSalvarTarefaSemData() throws MalformedURLException {
 
 		WebDriver driver = acessarAplicacao();
 		
@@ -98,7 +115,7 @@ public class TaskTest {
 	}
 	
 	@Test
-	public void naoDeveSalvarTarefaComDataPassada() {
+	public void naoDeveSalvarTarefaComDataPassada() throws MalformedURLException {
 
 		WebDriver driver = acessarAplicacao();
 		
